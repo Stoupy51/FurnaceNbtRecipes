@@ -14,7 +14,7 @@ data modify storage furnace_nbt_recipes:main furnace set from block ~ ~ ~
 
 	scoreboard players set #found furnace_nbt_recipes.data 0
 	execute in minecraft:overworld run data modify block -30000000 14 1610 Items set from storage furnace_nbt_recipes:main furnace.Items
-	execute in minecraft:overworld positioned -30000000 14 1610 run function furnace_nbt_recipes:v1.0/technical/call_recipes
+	execute in minecraft:overworld positioned -30000000 14 1610 run function furnace_nbt_recipes:v1.1/technical/call_recipes
 	execute store result score #excepted_cmd furnace_nbt_recipes.data in minecraft:overworld run data get block -30000000 14 1610 Items[{Slot:3b}].tag.CustomModelData
 
 #Disable cooking if not permitted
@@ -23,7 +23,7 @@ data modify storage furnace_nbt_recipes:main furnace set from block ~ ~ ~
 	execute if score #reset furnace_nbt_recipes.data matches 0 store success score #reset furnace_nbt_recipes.data unless score #output_cmd furnace_nbt_recipes.data matches 0 unless score #output_cmd furnace_nbt_recipes.data = #excepted_cmd furnace_nbt_recipes.data
 
 #Otherwise, continue
-	execute if score #reset furnace_nbt_recipes.data matches 0 if score #found furnace_nbt_recipes.data matches 1 run function furnace_nbt_recipes:v1.0/technical/cook
+	execute if score #reset furnace_nbt_recipes.data matches 0 if score #found furnace_nbt_recipes.data matches 1 run function furnace_nbt_recipes:v1.1/technical/cook
 	execute if score #reset furnace_nbt_recipes.data matches 1 run data modify block ~ ~ ~ CookTime set value 0s
 	execute if score #reset furnace_nbt_recipes.data matches 1 if score #nbt_smelting.major load.status matches 1.. align xyz run scoreboard players set @e[tag=nbt_smelting.furnace.active,dx=-1,dy=-1,dz=-1] nbt_smelting.data 0
 

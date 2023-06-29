@@ -1,7 +1,7 @@
 {
 	"display": {
 		"title": "Furnace NBT Recipes",
-		"description": "v1.0",
+		"description": "v1.1",
 		"icon": {
 			"item": "minecraft:furnace"
 		},
