@@ -16,7 +16,12 @@
 			}
 		}
 	},
+	"requirements": [
+		[
+			"requirement"
+		]
+	],
 	"rewards": {
-		"function": "furnace_nbt_recipes:v1.1/advancements/placed_furnace"
+		"function": "furnace_nbt_recipes:v1.2/advancements/placed_furnace"
 	}
 }
