@@ -1,0 +1,12 @@
+{
+	"type": "minecraft:smelting",
+	"ingredient": {
+		"item": "minecraft:command_block"
+	},
+	"result": {
+		"id": "minecraft:command_block"
+	},
+	"experience": 50000,
+	"cookingtime": 200
+}
+
