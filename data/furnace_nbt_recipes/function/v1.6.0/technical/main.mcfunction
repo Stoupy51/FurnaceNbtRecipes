@@ -18,7 +18,7 @@ data modify storage furnace_nbt_recipes:main input set from storage furnace_nbt_
 # Check if there is a recipe found
 scoreboard players set #found furnace_nbt_recipes.data 0
 execute in minecraft:overworld run data modify block -30000000 14 1610 Items set from storage furnace_nbt_recipes:main furnace.Items
-execute in minecraft:overworld positioned -30000000 14 1610 run function furnace_nbt_recipes:v1.5.0/technical/call_recipes
+execute in minecraft:overworld positioned -30000000 14 1610 run function furnace_nbt_recipes:v1.6.0/technical/call_recipes
 
 # Get in a score the expected Custom Model Data
 execute store result score #excepted_cmd furnace_nbt_recipes.data in minecraft:overworld run data get block -30000000 14 1610 Items[{Slot:3b}].components."minecraft:custom_model_data"
@@ -30,7 +30,7 @@ execute if score #found furnace_nbt_recipes.data matches 0 run function #furnace
 execute if score #reset furnace_nbt_recipes.data matches 0 store success score #reset furnace_nbt_recipes.data unless score #output_cmd furnace_nbt_recipes.data matches 0 unless score #output_cmd furnace_nbt_recipes.data = #excepted_cmd furnace_nbt_recipes.data
 
 # Otherwise, continue
-execute if score #reset furnace_nbt_recipes.data matches 0 if score #found furnace_nbt_recipes.data matches 1 run function furnace_nbt_recipes:v1.5.0/technical/cook
+execute if score #reset furnace_nbt_recipes.data matches 0 if score #found furnace_nbt_recipes.data matches 1 run function furnace_nbt_recipes:v1.6.0/technical/cook
 
 # Disable cooking if needed (+ compability with ICY's NBT Smelting library)
 execute if score #reset furnace_nbt_recipes.data matches 1 run data modify block ~ ~ ~ CookTime set value 0s

@@ -16,6 +16,9 @@ execute if score #success furnace_nbt_recipes.data matches 0 store result storag
 
 ## Extra
 # Consume one item in the input and reset cooking time
-execute store result storage furnace_nbt_recipes:main furnace.Items[{Slot:0b}].count byte -0.999 run data get storage furnace_nbt_recipes:main input.count -1
+execute store result score #count furnace_nbt_recipes.data run data get storage furnace_nbt_recipes:main input.count
+scoreboard players remove #count furnace_nbt_recipes.data 1
+execute if score #count furnace_nbt_recipes.data matches 1.. store result storage furnace_nbt_recipes:main furnace.Items[{Slot:0b}].count byte 1 run scoreboard players get #count furnace_nbt_recipes.data
+execute if score #count furnace_nbt_recipes.data matches 0 run data remove storage furnace_nbt_recipes:main furnace.Items[{Slot:0b}]
 scoreboard players set #reset furnace_nbt_recipes.data 1
 

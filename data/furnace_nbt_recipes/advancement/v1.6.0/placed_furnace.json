@@ -22,6 +22,6 @@
 		]
 	],
 	"rewards": {
-		"function": "furnace_nbt_recipes:v1.5.0/advancements/placed_furnace"
+		"function": "furnace_nbt_recipes:v1.6.0/advancements/placed_furnace"
 	}
 }
