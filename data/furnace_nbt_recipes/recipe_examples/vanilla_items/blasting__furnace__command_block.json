@@ -1,8 +1,6 @@
 {
 	"type": "minecraft:blasting",
-	"ingredient": {
-		"item": "minecraft:furnace"
-	},
+	"ingredient":  "minecraft:furnace",
 	"result": {
 		"id": "minecraft:command_block"
 	},
