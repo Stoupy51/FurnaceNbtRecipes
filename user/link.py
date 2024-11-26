@@ -14,15 +14,21 @@ def main(config: dict) -> None:
 	# Write additional confirm load things
 	write_to_load_file(config, f"""
 # Objectives initialization
-scoreboard objectives add furnace_nbt_recipes.data dummy
+scoreboard objectives add {namespace}.data dummy
 
 # Place a yellow shulker box for inventory manipulation
 execute in minecraft:overworld run forceload add -30000000 1600
 
-schedule function furnace_nbt_recipes:v{version}/load_delayed 2s replace
-schedule function furnace_nbt_recipes:v{version}/loop 2s replace
+schedule function {namespace}:v{version}/load_delayed 2s replace
+schedule function {namespace}:v{version}/loop 2s replace
 """)
-	
+
+	# Write functions that checks for version
+	write_to_versioned_file(config, "advancements/placed_furnace", f"""
+advancement revoke @s only {namespace}:v{version}/placed_furnace
+execute if score #{namespace}.major load.status matches {major} if score #{namespace}.minor load.status matches {minor} if score #{namespace}.patch load.status matches {patch} run function {namespace}:v{version}/advancements/check_for_furnaces/look_all
+""")
+
 	# Copy every file in the manual_merge folder
 	MANUAL_MERGE_FOLDER: str = f"{ROOT}/manual_merge"
 	for root, _, files in os.walk(MANUAL_MERGE_FOLDER):
