@@ -13,7 +13,7 @@ BUILD_COPY_DESTINATIONS: tuple[list, list] = (["E:/my_folders/advanced_desktop/p
 # Datapack related constants
 AUTHOR: str = "Stoupy51"					# Author(s) name(s) displayed in pack.mcmeta, also used to add convention.debug tag to the players of the same name(s) <-- showing additionnal displays like datapack loading
 PROJECT_NAME: str = "FurnaceNbtRecipes"	# Name of the datapack, used for messages and items lore
-VERSION: str = "1.7.0"						# Datapack version in the following mandatory format: major.minor.patch, ex: 1.0.0 or 1.21.615
+VERSION: str = "1.8.0"						# Datapack version in the following mandatory format: major.minor.patch, ex: 1.0.0 or 1.21.615
 NAMESPACE: str = "furnace_nbt_recipes"		# Used to namespace functions, tags, etc. Should be the same you use in the merge folder.
 DESCRIPTION = f"{PROJECT_NAME} [{VERSION}] by {AUTHOR}"	# Pack description displayed in pack.mcmeta
 
