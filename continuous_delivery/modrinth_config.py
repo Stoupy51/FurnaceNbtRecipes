@@ -3,9 +3,7 @@
 from config import *
 
 # Constants
-SUMMARY: str = """
-More Apples is a simple data pack that modifies all leaves loot tables to add twice as many apples as vanilla oak leaves.
-"""
+SUMMARY: str = "Minecraft datapack library for handling custom furnace recipes with advanced NBT / component support!"
 
 DESCRIPTION_MARKDOWN: str = ""
 if os.path.exists(f"{ROOT}/README.md"):
