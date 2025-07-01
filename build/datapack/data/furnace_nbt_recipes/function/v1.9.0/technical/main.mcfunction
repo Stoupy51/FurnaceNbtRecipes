@@ -13,7 +13,6 @@ execute store result score #type furnace_nbt_recipes.data if block ~ ~ ~ blast_f
 execute if score #type furnace_nbt_recipes.data matches 0 if block ~ ~ ~ blast_furnace run scoreboard players set #type furnace_nbt_recipes.data 1
 execute if score #type furnace_nbt_recipes.data matches 0 if block ~ ~ ~ smoker run scoreboard players set #type furnace_nbt_recipes.data 2
 
-
 ## Storage manipulation
 # Copy some nbt into scores
 execute store result score #cook_time furnace_nbt_recipes.data run data get storage furnace_nbt_recipes:main furnace.cooking_time_spent
@@ -27,7 +26,6 @@ execute in minecraft:overworld positioned -30000000 14 1610 run function furnace
 
 # Get in a score the expected Custom Model Data
 execute store result score #excepted_cmd furnace_nbt_recipes.data in minecraft:overworld run data get block -30000000 14 1610 Items[{Slot:3b}].components."minecraft:custom_model_data"
-
 
 ## Disable cooking if not permitted (If no recipe is found and user conditions, or if the output is not the expected one)
 scoreboard players set #reset furnace_nbt_recipes.data 0

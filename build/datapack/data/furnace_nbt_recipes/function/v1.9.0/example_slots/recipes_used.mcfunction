@@ -19,4 +19,3 @@ execute if score #found furnace_nbt_recipes.data matches 0 store result score #f
 execute if score #found furnace_nbt_recipes.data matches 0 store result score #found furnace_nbt_recipes.data if data storage furnace_nbt_recipes:main input.components."minecraft:custom_data".smithed.dict.armor.simplunium run function furnace_nbt_recipes:v1.9.0/example_slots/xp/2.0
 execute if score #found furnace_nbt_recipes.data matches 0 store result score #found furnace_nbt_recipes.data if data storage furnace_nbt_recipes:main input.components."minecraft:custom_data".smithed.dict.tools.simplunium run function furnace_nbt_recipes:v1.9.0/example_slots/xp/2.0
 
-

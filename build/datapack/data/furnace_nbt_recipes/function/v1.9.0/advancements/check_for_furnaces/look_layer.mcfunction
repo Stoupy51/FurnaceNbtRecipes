@@ -311,6 +311,3 @@ execute positioned ~1 ~ ~06 if block ~ ~ ~ #furnace_nbt_recipes:furnaces run fun
 execute positioned ~1 ~ ~07 if block ~ ~ ~ #furnace_nbt_recipes:furnaces run function furnace_nbt_recipes:v1.9.0/advancements/check_for_furnaces/try_place_marker
 execute positioned ~1 ~ ~08 if block ~ ~ ~ #furnace_nbt_recipes:furnaces run function furnace_nbt_recipes:v1.9.0/advancements/check_for_furnaces/try_place_marker
 
-
-
-
