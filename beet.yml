@@ -26,6 +26,7 @@ pipeline:
     - "user.link"
     - "stewbeet.plugins.finalyze.basic_datapack_structure"
     - "stewbeet.plugins.finalyze.dependencies"
+    - "stewbeet.plugins.finalyze.last_final"
     - "stewbeet.plugins.auto.headers"
     - "stewbeet.plugins.archive"
     - "stewbeet.plugins.copy_to_destination"
