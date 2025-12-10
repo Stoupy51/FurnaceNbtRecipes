@@ -3,7 +3,8 @@
 # Imports
 import os
 
-from stewbeet import Advancement, BlockTag, Context, Function, FunctionTag, ItemTag, relative_path, set_json_encoder, write_load_file, write_versioned_function
+import stouputils as stp
+from stewbeet import Advancement, BlockTag, Context, Function, FunctionTag, ItemTag, set_json_encoder, write_load_file, write_versioned_function
 
 
 # Main function is run just before making finalyzing the build process (zip, headers, lang, ...)
@@ -16,6 +17,7 @@ def beet_default(ctx: Context) -> None:
 	write_load_file(f"""
 # Objectives initialization
 scoreboard objectives add {ns}.data dummy
+scoreboard objectives add {ns}.stall_time dummy
 
 # Place a yellow shulker box for inventory manipulation
 execute in minecraft:overworld run forceload add -30000000 1600
@@ -39,7 +41,7 @@ execute if score #{ns}.major load.status matches {major} if score #{ns}.minor lo
 	MANUAL_MERGE_FOLDER: str = f"{ctx.directory}/manual_merge"
 	for root, _, files in os.walk(MANUAL_MERGE_FOLDER):
 		for file in files:
-			src: str = relative_path(f"{root}/{file}")
+			src: str = stp.relative_path(f"{root}/{file}")
 			dst: str = os.path.splitext(src.replace("VERSION", f"v{version}"))[0]
 			with open(src) as f:
 				content: str = f.read()

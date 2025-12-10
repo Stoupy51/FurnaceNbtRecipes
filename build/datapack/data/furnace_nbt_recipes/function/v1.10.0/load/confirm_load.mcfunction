@@ -10,6 +10,7 @@ scoreboard players set #furnace_nbt_recipes.loaded load.status 1
 
 # Objectives initialization
 scoreboard objectives add furnace_nbt_recipes.data dummy
+scoreboard objectives add furnace_nbt_recipes.stall_time dummy
 
 # Place a yellow shulker box for inventory manipulation
 execute in minecraft:overworld run forceload add -30000000 1600

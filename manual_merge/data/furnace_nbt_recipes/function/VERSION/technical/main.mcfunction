@@ -32,6 +32,13 @@ execute if score #reset furnace_nbt_recipes.data matches 0 store success score #
 # Otherwise, continue
 execute if score #reset furnace_nbt_recipes.data matches 0 if score #found furnace_nbt_recipes.data matches 1 run function furnace_nbt_recipes:VERSION/technical/cook
 
+# Track stalling: if recipe found but cooking_time_spent is 0, increment stall_time
+execute if score #reset furnace_nbt_recipes.data matches 0 if score #found furnace_nbt_recipes.data matches 1 if score #cook_time furnace_nbt_recipes.data matches 0 run scoreboard players add @s furnace_nbt_recipes.stall_time 1
+
+# Force smelting if stalled for too long (200 ticks for furnace, 100 ticks for blast/smoker)
+execute if score #reset furnace_nbt_recipes.data matches 0 if score #found furnace_nbt_recipes.data matches 1 if score @s furnace_nbt_recipes.stall_time matches 100.. run scoreboard players operation #cook_time furnace_nbt_recipes.data = @s furnace_nbt_recipes.stall_time
+execute if score #reset furnace_nbt_recipes.data matches 0 if score #found furnace_nbt_recipes.data matches 1 if score @s furnace_nbt_recipes.stall_time matches 100.. run function furnace_nbt_recipes:VERSION/technical/cook
+
 # Disable cooking if needed (+ compability with ICY's NBT Smelting library)
 execute if score #reset furnace_nbt_recipes.data matches 1 run data modify block ~ ~ ~ cooking_time_spent set value 0s
 execute if score #reset furnace_nbt_recipes.data matches 1 if score #nbt_smelting.major load.status matches 1.. align xyz run scoreboard players set @e[tag=nbt_smelting.furnace.active,dx=-1,dy=-1,dz=-1] nbt_smelting.data 0
