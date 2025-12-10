@@ -1,7 +1,11 @@
 {
 	"pack": {
 		"pack_format": 81,
-		"description": "FurnaceNbtRecipes [1.9.1] by Stoupy51"
+		"description": "FurnaceNbtRecipes [1.10.0] by Stoupy51",
+		"supported_formats": [
+			81,
+			9999
+		]
 	},
 	"id": "furnace_nbt_recipes"
 }
