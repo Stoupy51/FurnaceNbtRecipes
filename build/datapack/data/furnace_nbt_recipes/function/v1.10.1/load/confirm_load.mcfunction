@@ -7,6 +7,7 @@
 # Confirm load
 tellraw @a[tag=convention.debug] {"text":"[Loaded FurnaceNbtRecipes v1.10.1]","color":"green"}
 scoreboard players set #furnace_nbt_recipes.loaded load.status 1
+function furnace_nbt_recipes:v1.10.1/load/set_items_storage
 
 # Objectives initialization
 scoreboard objectives add furnace_nbt_recipes.data dummy

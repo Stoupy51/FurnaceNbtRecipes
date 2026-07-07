@@ -1,10 +1,13 @@
 
 # ruff: noqa: E501
 # Imports
-import os
+from stewbeet import BlockTag, Context, ItemTag, set_json_encoder, write_load_file, write_versioned_function
 
-import stouputils as stp
-from stewbeet import Advancement, BlockTag, Context, Function, FunctionTag, ItemTag, set_json_encoder, write_load_file, write_versioned_function
+from user.check_for_furnaces import setup_check_for_furnaces_functions
+from user.core import setup_core_functions
+from user.example_slots import setup_example_slots_functions
+from user.resources import setup_resources
+from user.technical import setup_technical_functions
 
 
 # Main function is run just before making finalyzing the build process (zip, headers, lang, ...)
@@ -37,21 +40,12 @@ execute if score #{ns}.major load.status matches {major} if score #{ns}.minor lo
 	ctx.data[ns].item_tags["armor/leather"] = set_json_encoder(ItemTag({"values": ["leather_helmet","leather_chestplate","leather_leggings","leather_boots"]}))
 	ctx.data[ns].item_tags["tools/diamond"] = set_json_encoder(ItemTag({"values": ["diamond_sword","diamond_pickaxe","diamond_axe","diamond_shovel","diamond_hoe"]}))
 
-	# Copy every file in the manual_merge folder
-	MANUAL_MERGE_FOLDER: str = f"{ctx.directory}/manual_merge"
-	for root, _, files in os.walk(MANUAL_MERGE_FOLDER):
-		for file in files:
-			src: str = stp.relative_path(f"{root}/{file}")
-			dst: str = os.path.splitext(src.replace("VERSION", f"v{version}"))[0]
-			with open(src) as f:
-				content: str = f.read()
-				content = content.replace("NAMESPACE", ns)
-				content = content.replace("VERSION", f"v{version}")
-				if "advancement/" in src:
-					ctx.data[ns].advancements[dst.split("advancement/")[-1]] = set_json_encoder(Advancement(content), max_level=-1)
-				elif "tags/function/" in src:
-					ctx.data[ns].function_tags[dst.split("tags/function/")[-1]] = set_json_encoder(FunctionTag(content))
-				elif "function/" in src:
-					ctx.data[ns].functions[dst.split("function/")[-1]] = Function(content)
-	pass
+	# Setup json resources (placed furnace advancement, v1 api function tags)
+	setup_resources(ctx)
+
+	# Setup all functions (loading/loop, furnace detection, example slots, technical cooking)
+	setup_core_functions(ctx)
+	setup_check_for_furnaces_functions(ctx)
+	setup_example_slots_functions(ctx)
+	setup_technical_functions(ctx)
 
