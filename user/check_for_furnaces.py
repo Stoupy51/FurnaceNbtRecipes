@@ -29,7 +29,6 @@ execute positioned ~ ~-5 ~ run function {ns}:v{version}/advancements/check_for_f
 execute positioned ~ ~-6 ~ run function {ns}:v{version}/advancements/check_for_furnaces/look_layer
 execute positioned ~ ~-7 ~ run function {ns}:v{version}/advancements/check_for_furnaces/look_layer
 execute positioned ~ ~-8 ~ run function {ns}:v{version}/advancements/check_for_furnaces/look_layer
-
 """)
 
 	write_versioned_function("advancements/check_for_furnaces/look_layer", f"""
@@ -339,7 +338,6 @@ execute positioned ~1 ~ ~05 if block ~ ~ ~ #{ns}:furnaces run function {ns}:v{ve
 execute positioned ~1 ~ ~06 if block ~ ~ ~ #{ns}:furnaces run function {ns}:v{version}/advancements/check_for_furnaces/try_place_marker
 execute positioned ~1 ~ ~07 if block ~ ~ ~ #{ns}:furnaces run function {ns}:v{version}/advancements/check_for_furnaces/try_place_marker
 execute positioned ~1 ~ ~08 if block ~ ~ ~ #{ns}:furnaces run function {ns}:v{version}/advancements/check_for_furnaces/try_place_marker
-
 
 
 

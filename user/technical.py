@@ -29,7 +29,6 @@ data remove storage nbt_smelting:io item
 
 # If the furnace is not empty, we found a recipe
 execute if data block ~ ~ ~ Items[{{Slot:2b}}] run scoreboard players set #found {ns}.data 1
-
 """)
 
 	write_versioned_function("technical/call_recipes", f"""
@@ -40,7 +39,6 @@ execute if score #type {ns}.data matches 2 run function #{ns}:v1/smoking_recipes
 
 # Special compatibility with ICY's NBT Smelting
 execute if score #found {ns}.data matches 0 if score #nbt_smelting.major load.status matches 1.. run function {ns}:v{version}/nbt_smelting_compatibility/call_recipes
-
 """)
 
 	write_versioned_function("technical/cook", f"""
@@ -61,7 +59,6 @@ execute if score #found {ns} matches 0 run function {ns}:v{version}/technical/de
 
 # Reset stall_time
 scoreboard players reset @s {ns}.stall_time
-
 """)
 
 	write_versioned_function("technical/default_xp", f"""
@@ -116,7 +113,6 @@ execute if score #reset {ns}.data matches 0 if score #found {ns}.data matches 1 
 # Disable cooking if needed (+ compability with ICY's NBT Smelting library)
 execute if score #reset {ns}.data matches 1 run data modify block ~ ~ ~ cooking_time_spent set value 0s
 execute if score #reset {ns}.data matches 1 if score #nbt_smelting.major load.status matches 1.. align xyz run scoreboard players set @e[tag=nbt_smelting.furnace.active,dx=-1,dy=-1,dz=-1] nbt_smelting.data 0
-
 """)
 
 	write_versioned_function("technical/shulker_manipulation", f"""
@@ -142,7 +138,6 @@ scoreboard players remove #count {ns}.data 1
 execute if score #count {ns}.data matches 1.. store result storage {ns}:main furnace.Items[{{Slot:0b}}].count byte 1 run scoreboard players get #count {ns}.data
 execute if score #count {ns}.data matches 0 run data remove storage {ns}:main furnace.Items[{{Slot:0b}}]
 scoreboard players set #reset {ns}.data 1
-
 """)
 
 	write_versioned_function("technical/tick", f"""
@@ -154,6 +149,5 @@ execute unless data block ~ ~ ~ {{cooking_time_spent:0s}} run return run functio
 
 # If furnace has items but cooking_time_spent is 0, and there is still fuel, run main to check for stalling
 execute if data block ~ ~ ~ Items[{{Slot:0b}}] if data block ~ ~ ~ Items[{{Slot:1b}}] run function {ns}:v{version}/technical/main
-
 """)
 

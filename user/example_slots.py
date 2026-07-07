@@ -25,7 +25,6 @@ def setup_example_slots_functions(ctx: Context) -> None:
 # # Simplunium Armor & Tools
 # execute if score #found {ns}.data matches 0 store result score #found {ns}.data if data storage {ns}:main input.components."minecraft:custom_data".smithed.dict.armor.simplunium run loot replace block ~ ~ ~ container.3 loot simplenergy:i/simplunium_nugget
 # execute if score #found {ns}.data matches 0 store result score #found {ns}.data if data storage {ns}:main input.components."minecraft:custom_data".smithed.dict.tools.simplunium run loot replace block ~ ~ ~ container.3 loot simplenergy:i/simplunium_nugget
-
 """)
 
 	write_versioned_function("example_slots/disable_cooking", f"""
@@ -46,7 +45,6 @@ execute if score #reset {ns}.data matches 0 store success score #reset {ns}.data
 execute if score #reset {ns}.data matches 0 store success score #reset {ns}.data if data storage {ns}:main input{{id:"minecraft:diamond_axe"}}
 execute if score #reset {ns}.data matches 0 store success score #reset {ns}.data if data storage {ns}:main input{{id:"minecraft:diamond_hoe"}}
 execute if score #reset {ns}.data matches 0 store success score #reset {ns}.data if data storage {ns}:main input{{id:"minecraft:diamond_shovel"}}
-
 """)
 
 	write_versioned_function("example_slots/recipes_used", f"""
@@ -65,7 +63,6 @@ execute if score #found {ns}.data matches 0 store result score #found {ns}.data 
 execute if score #found {ns}.data matches 0 store result score #found {ns}.data if data storage {ns}:main input.components."minecraft:custom_data".smithed.dict.armor.simplunium run function {ns}:v{version}/example_slots/xp/2.0
 execute if score #found {ns}.data matches 0 store result score #found {ns}.data if data storage {ns}:main input.components."minecraft:custom_data".smithed.dict.tools.simplunium run function {ns}:v{version}/example_slots/xp/2.0
 
-
 """)
 
 	write_versioned_function("example_slots/smelting_recipes", f"""
@@ -83,11 +80,9 @@ execute if score #found {ns}.data matches 0 store result score #found {ns}.data 
 # # Simplunium Armor & Tools
 # execute if score #found {ns}.data matches 0 store result score #found {ns}.data if data storage {ns}:main input.components."minecraft:custom_data".smithed.dict.armor.simplunium run loot replace block ~ ~ ~ container.3 loot simplenergy:i/simplunium_nugget
 # execute if score #found {ns}.data matches 0 store result score #found {ns}.data if data storage {ns}:main input.components."minecraft:custom_data".smithed.dict.tools.simplunium run loot replace block ~ ~ ~ container.3 loot simplenergy:i/simplunium_nugget
-
 """)
 
 	write_versioned_function("example_slots/smoking_recipes", """
-
 
 """)
 
