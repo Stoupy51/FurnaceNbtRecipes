@@ -7,11 +7,15 @@
 #
 
 # Destroy marker entity if furnace is destroyed, and stop execution
-execute unless block ~ ~ ~ #furnace_nbt_recipes:furnaces run return run kill @s
+execute unless block ~ ~ ~ #furnace_nbt_recipes:furnaces run return run function furnace_nbt_recipes:v1.10.2/technical/destroy
 
-# Else, run main function if furnace is cooking
-execute unless data block ~ ~ ~ {cooking_time_spent:0s} run return run function furnace_nbt_recipes:v1.10.2/technical/main
+# Give back the output item parked for the lighting tick
+execute if score @s furnace_nbt_recipes.stashed matches 1 unless data block ~ ~ ~ Items[{Slot:2b}] run function furnace_nbt_recipes:v1.10.2/technical/unstash
 
-# If furnace has items but cooking_time_spent is 0, and there is still fuel, run main to check for stalling
-execute if data block ~ ~ ~ Items[{Slot:0b}] if data block ~ ~ ~ Items[{Slot:1b}] run function furnace_nbt_recipes:v1.10.2/technical/main
+# Nothing to cook
+execute unless data block ~ ~ ~ Items[{Slot:0b}] run return 0
+
+# Run main while the fire burns, and while there is fuel left to light it
+execute unless data block ~ ~ ~ {lit_time_remaining:0} run return run function furnace_nbt_recipes:v1.10.2/technical/main
+execute if data block ~ ~ ~ Items[{Slot:1b}] run function furnace_nbt_recipes:v1.10.2/technical/main
 

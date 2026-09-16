@@ -12,7 +12,7 @@ def setup_resources(ctx: Context) -> None:
 
 	json_content: JsonDict
 
-	json_content = {"criteria":{"requirement":{"trigger":"minecraft:placed_block","conditions":{"location":[{"condition":"minecraft:location_check","predicate":{"block":{"blocks":f"#{ns}:furnaces"}}}]}}},"requirements":[["requirement"]],"rewards":{"function":f"{ns}:v{version}/advancements/placed_furnace"}}
+	json_content = {"criteria":{"requirement":{"trigger":"minecraft:placed_block","conditions":{"location":{"type":"minecraft:location_check","predicate":{"block":{"blocks":f"#{ns}:furnaces"}}}}}},"requirements":[["requirement"]],"rewards":{"function":f"{ns}:v{version}/advancements/placed_furnace"}}
 	ctx.data[ns].advancements[f"v{version}/placed_furnace"] = set_json_encoder(Advancement(json_content), max_level=-1)
 
 	json_content = {"values":[]}

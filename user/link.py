@@ -21,6 +21,12 @@ def beet_default(ctx: Context) -> None:
 # Objectives initialization
 scoreboard objectives add {ns}.data dummy
 scoreboard objectives add {ns}.stall_time dummy
+scoreboard objectives add {ns}.progress dummy
+scoreboard objectives add {ns}.intended dummy
+scoreboard objectives add {ns}.stashed dummy
+
+# Cooking time held on furnaces running a custom recipe: high enough that vanilla never reaches it, low enough to stay in the 16 bits the furnace screen syncs
+scoreboard players set #held {ns}.data 30000
 
 # Place a yellow shulker box for inventory manipulation
 execute in minecraft:overworld run forceload add -30000000 1600

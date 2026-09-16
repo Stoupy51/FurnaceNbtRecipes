@@ -1,12 +1,11 @@
 {
 	"pack": {
-		"pack_format": 81,
+		"pack_format": 121,
 		"description": "FurnaceNbtRecipes [1.10.2] by Stoupy51",
-		"supported_formats": [
-			81,
-			9999
+		"min_format": [
+			121,
+			0
 		],
-		"min_format": 81,
 		"max_format": [
 			9999,
 			0

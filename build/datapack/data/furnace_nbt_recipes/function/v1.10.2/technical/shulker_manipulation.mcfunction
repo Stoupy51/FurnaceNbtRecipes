@@ -19,7 +19,7 @@ execute if score #success furnace_nbt_recipes.data matches 1 run data modify sto
 execute if score #success furnace_nbt_recipes.data matches 0 store result score #lib_count furnace_nbt_recipes.data run data get block -30000000 14 1610 Items[{Slot:3b}].count
 execute if score #success furnace_nbt_recipes.data matches 0 store result score #furnace_count furnace_nbt_recipes.data run data get storage furnace_nbt_recipes:main furnace.Items[{Slot:2b}].count
 execute if score #success furnace_nbt_recipes.data matches 0 run scoreboard players operation #lib_count furnace_nbt_recipes.data += #furnace_count furnace_nbt_recipes.data
-execute if score #success furnace_nbt_recipes.data matches 0 store result storage furnace_nbt_recipes:main furnace.Items[{Slot:2b}].count byte 1 run scoreboard players get #lib_count furnace_nbt_recipes.data
+execute if score #success furnace_nbt_recipes.data matches 0 store result storage furnace_nbt_recipes:main furnace.Items[{Slot:2b}].count int 1 run scoreboard players get #lib_count furnace_nbt_recipes.data
 
 ## Extra
 # Consume one item in the input and reset cooking time

@@ -57,6 +57,7 @@ execute if score #found furnace_nbt_recipes.data matches 0 store result score #f
 ## 📝 Recipe Format
 
 📝 For each custom recipe you make, you'll need to add a recipe that take the base item ingredient as ingredient and result the base item of the result.<br>
+⏱️ The `cookingtime` field is mandatory and must be `200`, for every furnace type: a blast furnace or a smoker divides it by the speed multiplier of its fuel.<br>
 ⚠️ This part is really wanky and I don't want people to use this library so here is a link to [SimplEnergy's example](https://github.com/Stoupy51/SimplEnergy/blob/main/build/datapack/data/furnace_nbt_recipes/recipe/vanilla_items/smelting__command_block__minecraft_diamond.json).
 
 ## ⭐ Star History
