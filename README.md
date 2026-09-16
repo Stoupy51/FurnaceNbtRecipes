@@ -57,8 +57,15 @@ execute if score #found furnace_nbt_recipes.data matches 0 store result score #f
 ## 📝 Recipe Format
 
 📝 For each custom recipe you make, you'll need to add a recipe that take the base item ingredient as ingredient and result the base item of the result.<br>
-⏱️ The `cookingtime` field is mandatory and must be `200`, for every furnace type: a blast furnace or a smoker divides it by the speed multiplier of its fuel.<br>
+⏱️ The `cookingtime` field is mandatory, and the game divides it by the speed multiplier of the fuel: write `200` and a furnace takes ten seconds, while a blast furnace or a smoker on vanilla fuel takes five.<br>
 ⚠️ This part is really wanky and I don't want people to use this library so here is a link to [SimplEnergy's example](https://github.com/Stoupy51/SimplEnergy/blob/main/build/datapack/data/furnace_nbt_recipes/recipe/vanilla_items/smelting__command_block__minecraft_diamond.json).
+
+## ⚙️ How the cooking is driven
+
+🕐 The library owns the furnace clock: it holds the cooking time high enough that the vanilla recipe can never complete on its own, and swaps in your result once the recipe has had its full duration.<br>
+⛽ The pace comes from the fuel, whatever it is: a custom fuel with a `speed_multiplier` of 10 cooks ten times faster, exactly as it would for a vanilla recipe.<br>
+🔥 Vanilla refuses to light a furnace whose output slot holds an item its own recipe result cannot stack with. The library hands it a free slot for one tick so it lights itself and burns its fuel normally, then puts the item back.<br>
+🧱 Two custom results never merge: while the output slot holds a different item, the furnace stops instead of stacking them, and resumes once the slot is cleared.
 
 ## ⭐ Star History
 
