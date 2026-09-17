@@ -24,9 +24,14 @@ scoreboard objectives add {ns}.stall_time dummy
 scoreboard objectives add {ns}.progress dummy
 scoreboard objectives add {ns}.intended dummy
 scoreboard objectives add {ns}.stashed dummy
+scoreboard objectives add {ns}.speed dummy
+scoreboard objectives add {ns}.partial dummy
 
 # Cooking time held on furnaces running a custom recipe: high enough that vanilla never reaches it, low enough to stay in the 16 bits the furnace screen syncs
 scoreboard players set #held {ns}.data 30000
+
+# A speed is given per thousand, so a furnace can cook at a fraction of a tick per tick
+scoreboard players set #1000 {ns}.data 1000
 
 # Place a yellow shulker box for inventory manipulation
 execute in minecraft:overworld run forceload add -30000000 1600

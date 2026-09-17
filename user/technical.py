@@ -60,6 +60,7 @@ execute if score #found {ns} matches 0 run function {ns}:v{version}/technical/de
 execute if score @s {ns}.intended matches 1.. store result block ~ ~ ~ cooking_total_time int 1 run scoreboard players get @s {ns}.intended
 data modify block ~ ~ ~ cooking_time_spent set value 0
 scoreboard players set @s {ns}.progress 0
+scoreboard players set @s {ns}.partial 0
 scoreboard players reset @s {ns}.stall_time
 """)
 
@@ -68,15 +69,22 @@ scoreboard players reset @s {ns}.stall_time
 # Adopt the cooking time the game computed for this recipe, it accounts for the fuel speed multiplier
 scoreboard players add @s {ns}.intended 0
 scoreboard players add @s {ns}.progress 0
+execute unless score @s {ns}.speed matches 1.. run scoreboard players set @s {ns}.speed 1000
 execute unless score #total_time {ns}.data = #held {ns}.data run function {ns}:v{version}/technical/clock_reset
 
 # Without a known duration, leave the furnace alone until it lights again and the game computes one
 execute unless score @s {ns}.intended matches 1.. run return 0
 
 # Advance like vanilla does: forward while lit, backward once the fire is out
-execute unless data block ~ ~ ~ {{lit_time_remaining:0}} run scoreboard players add @s {ns}.progress 1
+execute unless data block ~ ~ ~ {{lit_time_remaining:0}} run scoreboard players operation @s {ns}.partial += @s {ns}.speed
+scoreboard players operation #gain {ns}.data = @s {ns}.partial
+scoreboard players operation #gain {ns}.data /= #1000 {ns}.data
+scoreboard players operation @s {ns}.progress += #gain {ns}.data
+scoreboard players operation #gain {ns}.data *= #1000 {ns}.data
+scoreboard players operation @s {ns}.partial -= #gain {ns}.data
 execute if data block ~ ~ ~ {{lit_time_remaining:0}} run scoreboard players remove @s {ns}.progress 2
 execute if score @s {ns}.progress matches ..0 run scoreboard players set @s {ns}.progress 0
+execute if score @s {ns}.progress matches ..0 run scoreboard players set @s {ns}.partial 0
 
 # Hold the furnace clock, scaling our progress onto it so the progress arrow keeps its real ratio
 scoreboard players operation #write {ns}.data = #held {ns}.data
@@ -94,6 +102,7 @@ execute if score @s {ns}.progress >= @s {ns}.intended run function {ns}:v{versio
 scoreboard players set @s {ns}.intended 0
 execute if score #total_time {ns}.data < #held {ns}.data run scoreboard players operation @s {ns}.intended = #total_time {ns}.data
 execute if score #total_time {ns}.data < #held {ns}.data run scoreboard players operation @s {ns}.progress = #cook_time {ns}.data
+scoreboard players set @s {ns}.partial 0
 """)
 
 	write_versioned_function("technical/default_xp", f"""

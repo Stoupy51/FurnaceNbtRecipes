@@ -19,6 +19,9 @@ def setup_resources(ctx: Context) -> None:
 	ctx.data[ns].function_tags["v1/blasting_recipes"] = set_json_encoder(FunctionTag(json_content))
 
 	json_content = {"values":[]}
+	ctx.data[ns].function_tags["v1/configure_furnace"] = set_json_encoder(FunctionTag(json_content))
+
+	json_content = {"values":[]}
 	ctx.data[ns].function_tags["v1/disable_cooking"] = set_json_encoder(FunctionTag(json_content))
 
 	json_content = {"values":[]}

@@ -54,6 +54,18 @@ execute if score #reset furnace_nbt_recipes.data matches 0 store success score #
 execute if score #found furnace_nbt_recipes.data matches 0 store result score #found furnace_nbt_recipes.data if data storage furnace_nbt_recipes:main input{"components": {"minecraft:custom_data": {"simplenergy": {"raw_simplunium": true}}}} run function simplenergy:calls/furnace_nbt_recipes/xp_reward/0.8
 ```
 
+### `#furnace_nbt_recipes:v1/configure_furnace`
+⚡ Configure a furnace once, the tick the library starts tracking it, so a configured furnace costs nothing extra afterwards.<br>
+🏃 It runs **as the furnace's marker entity, at the furnace**, and sets `furnace_nbt_recipes.speed`, given **per thousand**: `1000` is the vanilla pace, `8000` cooks eight times faster, and `1200` cooks 1.2 times faster.<br>
+🧮 Thousandths exist so a furnace can cook at a fraction of a tick per tick; the leftover is carried between ticks, so even `1050` stays exact over a whole recipe.<br>
+🔄 The progress arrow stays smooth at any speed, because the library scales progress onto the clock it holds rather than onto the recipe duration.<br>
+✨ Example, an electric smelter that smelts eight times faster:
+
+```mcfunction
+# Run as the marker, at the furnace: check whatever identifies your block
+execute if entity @e[tag=simplenergy.electric_smelter,distance=..1] run scoreboard players set @s furnace_nbt_recipes.speed 8000
+```
+
 ## 📝 Recipe Format
 
 📝 For each custom recipe you make, you'll need to add a recipe that take the base item ingredient as ingredient and result the base item of the result.<br>

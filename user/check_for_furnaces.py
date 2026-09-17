@@ -344,6 +344,13 @@ execute positioned ~1 ~ ~08 if block ~ ~ ~ #{ns}:furnaces run function {ns}:v{ve
 """)
 
 	write_versioned_function("advancements/check_for_furnaces/try_place_marker", f"""
-execute align xyz positioned ~.5 ~ ~.5 unless entity @e[type=marker,dx=-1,dy=-1,dz=-1,tag={ns}.furnace] run summon marker ~ ~ ~ {{Tags:["{ns}.furnace"]}}
+execute align xyz positioned ~.5 ~ ~.5 unless entity @e[type=marker,dx=-1,dy=-1,dz=-1,tag={ns}.furnace] summon marker run function {ns}:v{version}/advancements/check_for_furnaces/new_furnace
+""")
+
+	write_versioned_function("advancements/check_for_furnaces/new_furnace", f"""
+# A furnace is configured once, the tick it starts being tracked, so driving one costs nothing afterwards
+tag @s add {ns}.furnace
+scoreboard players set @s {ns}.speed 1000
+function #{ns}:v1/configure_furnace
 """)
 
