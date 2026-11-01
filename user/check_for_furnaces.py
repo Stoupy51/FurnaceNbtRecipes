@@ -350,6 +350,7 @@ execute align xyz positioned ~.5 ~ ~.5 unless entity @e[type=marker,dx=-1,dy=-1,
 	write_versioned_function("advancements/check_for_furnaces/new_furnace", f"""
 # A furnace is configured once, the tick it starts being tracked, so driving one costs nothing afterwards
 tag @s add {ns}.furnace
+data merge entity @s {{data:{{name:"Furnace NBT Recipes: tracked furnace"}}}}
 scoreboard players set @s {ns}.speed 1000
 function #{ns}:v1/configure_furnace
 """)
