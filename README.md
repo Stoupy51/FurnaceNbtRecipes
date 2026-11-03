@@ -44,6 +44,8 @@ Therefore, you should use this function tag to disable them with the following s
 execute if score #reset furnace_nbt_recipes.data matches 0 store success score #reset furnace_nbt_recipes.data if data storage furnace_nbt_recipes:main input{"id":"minecraft:command_block"}
 ```
 
+♻️ Like the recipe tags, it runs once per ingredient and furnace type, and its answer is reused by every furnace holding that ingredient: decide from `input` and `#type` only.
+
 ### `#furnace_nbt_recipes:v1/recipes_used`
 ⚡ Configure XP rewards for your custom recipes when a player retrieves items from the furnace.<br>
 🎯 The XP amount can be customized based on the input item and furnace type (🔥 regular furnace, ⚒️ blast furnace, or 🍖 smoker).<br>
@@ -79,7 +81,12 @@ execute if entity @e[tag=simplenergy.electric_smelter,distance=..1] run scoreboa
 🕐 The library owns the furnace clock: it holds the cooking time high enough that the vanilla recipe can never complete on its own, and swaps in your result once the recipe has had its full duration.<br>
 ⛽ The pace comes from the fuel, whatever it is: a custom fuel with a `speed_multiplier` of 10 cooks ten times faster, exactly as it would for a vanilla recipe.<br>
 🔥 Vanilla refuses to light a furnace whose output slot holds an item its own recipe result cannot stack with. The library hands it a free slot for one tick so it lights itself and burns its fuel normally, then puts the item back.<br>
-🧱 Two custom results never merge: while the output slot holds a different item, the furnace stops instead of stacking them, and resumes once the slot is cleared.
+🧱 Two custom results never merge: while the output slot holds a different item, or the same one without room for the result, the furnace stops instead of stacking them, and resumes once the slot is cleared.
+
+## 🧪 Tests
+
+🔬 The [Ward](https://github.com/mcbookshelf/ward) tests in `tests/` run against the built pack: `uvx "mcward[cli]" test -p build/FurnaceNbtRecipes_datapack.zip -p tests -v 26.3 "furnace_nbt_recipes_test:*"`<br>
+🔁 Use `-v 26.4-snapshot-7` for the 26.4 snapshot. The first run starts a Ward server that stays up so the next runs take a second, and `uvx "mcward[cli]" stop --all` stops it.
 
 ## ⭐ Star History
 

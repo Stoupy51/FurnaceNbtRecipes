@@ -57,7 +57,9 @@ data remove storage {ns}:main searched
 # Apply XP support
 scoreboard players set #found {ns}.data 0
 function #{ns}:v1/recipes_used
-execute if score #found {ns} matches 0 run function {ns}:v{version}/technical/default_xp
+# A handler called through 'store result ... run function' sets no #found when its function returns nothing, so its write to RecipesUsed counts too
+execute if score #found {ns}.data matches 0 store success score #found {ns}.data run data modify storage {ns}:main furnace.RecipesUsed set from block ~ ~ ~ RecipesUsed
+execute if score #found {ns}.data matches 0 run function {ns}:v{version}/technical/default_xp
 
 # Restart the cooking clock, handing the furnace back its real cooking time
 execute if score @s {ns}.intended matches 1.. store result block ~ ~ ~ cooking_total_time int 1 run scoreboard players get @s {ns}.intended
@@ -79,13 +81,13 @@ execute unless score #total_time {ns}.data = #held {ns}.data run function {ns}:v
 execute unless score @s {ns}.intended matches 1.. run return 0
 
 # Advance like vanilla does: forward while lit, backward once the fire is out
-execute unless score #lit_time {ns}.data matches 0 run scoreboard players operation @s {ns}.partial += @s {ns}.speed
+execute unless score #lit {ns}.data matches 0 run scoreboard players operation @s {ns}.partial += @s {ns}.speed
 scoreboard players operation #gain {ns}.data = @s {ns}.partial
 scoreboard players operation #gain {ns}.data /= #1000 {ns}.data
 scoreboard players operation @s {ns}.progress += #gain {ns}.data
 scoreboard players operation #gain {ns}.data *= #1000 {ns}.data
 scoreboard players operation @s {ns}.partial -= #gain {ns}.data
-execute if score #lit_time {ns}.data matches 0 run scoreboard players remove @s {ns}.progress 2
+execute if score #lit {ns}.data matches 0 run scoreboard players remove @s {ns}.progress 2
 execute if score @s {ns}.progress matches ..0 run scoreboard players set @s {ns}.progress 0
 execute if score @s {ns}.progress matches ..0 run scoreboard players set @s {ns}.partial 0
 
@@ -139,18 +141,16 @@ scoreboard players reset #count {ns}.data
 """)
 
 	write_versioned_function("technical/main", f"""
+# Work while the fire burns, and while there is fuel left to light it
+execute store result score #lit {ns}.data if block ~ ~ ~ #{ns}:furnaces[lit=true]
+execute if score #lit {ns}.data matches 0 unless items block ~ ~ ~ container.1 * run return 0
+
 # Copy furnace nbt once, the checks below read this copy
 data modify storage {ns}:main furnace set from block ~ ~ ~
-execute store result score #lit_time {ns}.data run data get storage {ns}:main furnace.lit_time_remaining
 
-# Work while the fire burns, and while there is fuel left to light it
-execute if score #lit_time {ns}.data matches 0 unless items block ~ ~ ~ container.1 * run return 0
-
-# Get what type of furnace is being used
-scoreboard players set #type {ns}.data 0
-execute store result score #type {ns}.data if block ~ ~ ~ blast_furnace
-execute if score #type {ns}.data matches 0 if block ~ ~ ~ blast_furnace run scoreboard players set #type {ns}.data 1
-execute if score #type {ns}.data matches 0 if block ~ ~ ~ smoker run scoreboard players set #type {ns}.data 2
+# A tracked furnace keeps its block, so its type is read once, whatever entity tracks it
+execute unless score @s {ns}.type matches 0.. run function {ns}:v{version}/technical/furnace_type
+scoreboard players operation #type {ns}.data = @s {ns}.type
 
 
 ## Storage manipulation
@@ -167,33 +167,31 @@ execute store result storage {ns}:main ingredient.furnace_type byte 1 run scoreb
 execute store success score #new_ingredient {ns}.data run data modify storage {ns}:main searched set from storage {ns}:main ingredient
 execute if score #new_ingredient {ns}.data matches 1 in minecraft:overworld run function {ns}:v{version}/technical/search_recipe
 scoreboard players operation #found {ns}.data = #searched_found {ns}.data
+scoreboard players operation #reset {ns}.data = #searched_reset {ns}.data
 
-## Disable cooking if not permitted (If no recipe is found and user conditions, or if the output slot holds another item)
-scoreboard players set #reset {ns}.data 0
-execute if score #found {ns}.data matches 0 run function #{ns}:v1/disable_cooking
+## Disable cooking if not permitted (If no recipe is found and user conditions, or if the output slot holds another item or is full)
 execute if score #found {ns}.data matches 1 if data storage {ns}:main furnace.Items[{{Slot:2b}}] run function {ns}:v{version}/technical/same_output
-execute if score #found {ns}.data matches 1 if data storage {ns}:main furnace.Items[{{Slot:2b}}] unless score #same {ns}.data matches 2 run scoreboard players set #reset {ns}.data 1
 
 # Otherwise, continue
 execute if score #reset {ns}.data matches 0 if score #found {ns}.data matches 1 if score #total_time {ns}.data matches 1.. run function {ns}:v{version}/technical/clock
 
 # A vanilla recipe keeps the vanilla clock, so a furnace configured faster than 1000 gets its extra progress here
-execute if score #reset {ns}.data matches 0 if score #found {ns}.data matches 0 if score @s {ns}.speed matches 1001.. if score #cook_time {ns}.data matches 1.. if score #total_time {ns}.data matches 1..29999 unless score #lit_time {ns}.data matches 0 run function {ns}:v{version}/technical/vanilla_clock
+execute if score #reset {ns}.data matches 0 if score #found {ns}.data matches 0 if score @s {ns}.speed matches 1001.. if score #cook_time {ns}.data matches 1.. if score #total_time {ns}.data matches 1..29999 unless score #lit {ns}.data matches 0 run function {ns}:v{version}/technical/vanilla_clock
 
 # The fire paces the cooking, so stalling only counts while it is out
-execute unless score #lit_time {ns}.data matches 0 run scoreboard players reset @s {ns}.stall_time
+execute unless score #lit {ns}.data matches 0 run scoreboard players reset @s {ns}.stall_time
 
 # Track stalling: if recipe found but cooking_time_spent is 0, increment stall_time
 execute if score #reset {ns}.data matches 0 if score #found {ns}.data matches 1 if score #cook_time {ns}.data matches 0 run scoreboard players add @s {ns}.stall_time 1
 
 # Vanilla refuses to light while the output slot holds an item its own recipe cannot stack with, give it a free slot
-execute if score #reset {ns}.data matches 0 if score #found {ns}.data matches 1 if entity @s[type=marker] if score @s {ns}.stall_time matches 5 if score #lit_time {ns}.data matches 0 if items block ~ ~ ~ container.1 * if items block ~ ~ ~ container.2 * run function {ns}:v{version}/technical/ignite
+execute if score #reset {ns}.data matches 0 if score #found {ns}.data matches 1 if entity @s[type=marker] if score @s {ns}.stall_time matches 5 if score #lit {ns}.data matches 0 if items block ~ ~ ~ container.1 * if items block ~ ~ ~ container.2 * run function {ns}:v{version}/technical/ignite
 
 # Force smelting if stalled for too long (100 ticks)
 execute if score #reset {ns}.data matches 0 if score #found {ns}.data matches 1 if score @s {ns}.stall_time matches 100.. run function {ns}:v{version}/technical/cook
 
 # Disable cooking if needed (+ compability with ICY's NBT Smelting library)
-execute if score #reset {ns}.data matches 1 run data modify block ~ ~ ~ cooking_time_spent set value 0
+execute if score #reset {ns}.data matches 1 unless score #cook_time {ns}.data matches 0 run data modify block ~ ~ ~ cooking_time_spent set value 0
 execute if score #reset {ns}.data matches 1 if score #nbt_smelting.major load.status matches 1.. align xyz run scoreboard players set @e[tag=nbt_smelting.furnace.active,dx=-1,dy=-1,dz=-1] nbt_smelting.data 0
 """)
 
@@ -208,6 +206,13 @@ scoreboard players reset @s {ns}.intended
 scoreboard players reset @s {ns}.progress
 scoreboard players reset @s {ns}.partial
 scoreboard players reset @s {ns}.stall_time
+scoreboard players reset @s {ns}.type
+""")
+
+	write_versioned_function("technical/furnace_type", f"""
+scoreboard players set @s {ns}.type 0
+execute if block ~ ~ ~ blast_furnace run scoreboard players set @s {ns}.type 1
+execute if block ~ ~ ~ smoker run scoreboard players set @s {ns}.type 2
 """)
 
 	write_versioned_function("technical/ignite", f"""
@@ -238,26 +243,32 @@ data modify block -30000000 14 1610 Items set from storage {ns}:main furnace.Ite
 execute positioned -30000000 14 1610 run function {ns}:v{version}/technical/call_recipes
 scoreboard players operation #searched_found {ns}.data = #found {ns}.data
 
-# The output compared with the item already sitting in the output slot, count and slot aside
+# Whether a vanilla recipe is disabled depends on the ingredient alone, like the custom recipes
+scoreboard players set #reset {ns}.data 0
+execute if score #found {ns}.data matches 0 at @s run function #{ns}:v1/disable_cooking
+scoreboard players operation #searched_reset {ns}.data = #reset {ns}.data
+execute if score #found {ns}.data matches 0 run return 0
+
+# Room the output slot needs left for the library output: setting a count above the stack size clamps it to that size
+item replace block -30000000 14 1610 container.4 from block -30000000 14 1610 container.3
+item modify block -30000000 14 1610 container.4 {{type:"minecraft:set_count",count:99}}
+execute store result score #lib_room {ns}.data run data get block -30000000 14 1610 Items[{{Slot:4b}}].count
+
+# The output compared with the item already sitting in the output slot, as one item in that slot
 data modify storage {ns}:main check.lib set from block -30000000 14 1610 Items[{{Slot:3b}}]
-data remove storage {ns}:main check.lib.count
-data remove storage {ns}:main check.lib.Slot
+execute store result score #count {ns}.data run data get storage {ns}:main check.lib.count
+scoreboard players operation #lib_room {ns}.data -= #count {ns}.data
+data modify storage {ns}:main check.lib merge value {{count:1,Slot:2b}}
 """)
 
 	write_versioned_function("technical/same_output", f"""
-# Compare the library output with the item already sitting in the output slot, count and slot aside
-data modify storage {ns}:main check.fur set from storage {ns}:main furnace.Items[{{Slot:2b}}]
-data remove storage {ns}:main check.fur.count
-data remove storage {ns}:main check.fur.Slot
+execute store result score #count {ns}.data run data get storage {ns}:main furnace.Items[{{Slot:2b}}].count
+execute if score #count {ns}.data > #lib_room {ns}.data run return run scoreboard players set #reset {ns}.data 1
 
-# Matching both ways means the two items are the same, #same reaches 2
-scoreboard players set #same {ns}.data 0
-function {ns}:v{version}/technical/same_output_check with storage {ns}:main check
-""")
-
-	write_versioned_function("technical/same_output_check", f"""
-$execute if data storage {ns}:main check.fur$(lib) run scoreboard players add #same {ns}.data 1
-$execute if data storage {ns}:main check.lib$(fur) run scoreboard players add #same {ns}.data 1
+# Given the count search_recipe gave the library output, the output slot item equals it only when both stack
+data modify storage {ns}:main output set from storage {ns}:main furnace.Items[{{Slot:2b}}]
+data modify storage {ns}:main output.count set value 1
+execute store success score #reset {ns}.data run data modify storage {ns}:main output set from storage {ns}:main check.lib
 """)
 
 	write_versioned_function("technical/shulker_manipulation", f"""

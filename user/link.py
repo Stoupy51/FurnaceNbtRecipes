@@ -26,6 +26,7 @@ scoreboard objectives add {ns}.intended dummy
 scoreboard objectives add {ns}.stashed dummy
 scoreboard objectives add {ns}.speed dummy
 scoreboard objectives add {ns}.partial dummy
+scoreboard objectives add {ns}.type dummy
 
 # Cooking time held on furnaces running a custom recipe: high enough that vanilla never reaches it, low enough to stay in the 16 bits the furnace screen syncs
 scoreboard players set #held {ns}.data 30000
