@@ -1,9 +1,9 @@
 
 #> furnace_nbt_recipes:v1.12.0/technical/call_recipes
 #
-# @executed	in minecraft:overworld & positioned -30000000 14 1610
+# @executed	positioned -30000000 14 1610
 #
-# @within	furnace_nbt_recipes:v1.12.0/technical/main [ in minecraft:overworld & positioned -30000000 14 1610 ]
+# @within	furnace_nbt_recipes:v1.12.0/technical/search_recipe [ positioned -30000000 14 1610 ]
 #
 
 # Switch case on furnace type

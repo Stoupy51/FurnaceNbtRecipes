@@ -16,6 +16,9 @@ execute if score #reset furnace_nbt_recipes.data matches 0 run return 0
 # Apply new storage values (because shulker manipulation was done)
 data modify block ~ ~ ~ Items set from storage furnace_nbt_recipes:main furnace.Items
 
+# The output was taken from the shulker box, and a loot table may roll another one for the next item
+data remove storage furnace_nbt_recipes:main searched
+
 # Apply XP support
 scoreboard players set #found furnace_nbt_recipes.data 0
 function #furnace_nbt_recipes:v1/recipes_used

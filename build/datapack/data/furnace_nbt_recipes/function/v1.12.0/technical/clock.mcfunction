@@ -17,13 +17,13 @@ execute unless score #total_time furnace_nbt_recipes.data = #held furnace_nbt_re
 execute unless score @s furnace_nbt_recipes.intended matches 1.. run return 0
 
 # Advance like vanilla does: forward while lit, backward once the fire is out
-execute unless data block ~ ~ ~ {lit_time_remaining:0} run scoreboard players operation @s furnace_nbt_recipes.partial += @s furnace_nbt_recipes.speed
+execute unless score #lit_time furnace_nbt_recipes.data matches 0 run scoreboard players operation @s furnace_nbt_recipes.partial += @s furnace_nbt_recipes.speed
 scoreboard players operation #gain furnace_nbt_recipes.data = @s furnace_nbt_recipes.partial
 scoreboard players operation #gain furnace_nbt_recipes.data /= #1000 furnace_nbt_recipes.data
 scoreboard players operation @s furnace_nbt_recipes.progress += #gain furnace_nbt_recipes.data
 scoreboard players operation #gain furnace_nbt_recipes.data *= #1000 furnace_nbt_recipes.data
 scoreboard players operation @s furnace_nbt_recipes.partial -= #gain furnace_nbt_recipes.data
-execute if data block ~ ~ ~ {lit_time_remaining:0} run scoreboard players remove @s furnace_nbt_recipes.progress 2
+execute if score #lit_time furnace_nbt_recipes.data matches 0 run scoreboard players remove @s furnace_nbt_recipes.progress 2
 execute if score @s furnace_nbt_recipes.progress matches ..0 run scoreboard players set @s furnace_nbt_recipes.progress 0
 execute if score @s furnace_nbt_recipes.progress matches ..0 run scoreboard players set @s furnace_nbt_recipes.partial 0
 
@@ -31,8 +31,15 @@ execute if score @s furnace_nbt_recipes.progress matches ..0 run scoreboard play
 scoreboard players operation #write furnace_nbt_recipes.data = #held furnace_nbt_recipes.data
 scoreboard players operation #write furnace_nbt_recipes.data /= @s furnace_nbt_recipes.intended
 scoreboard players operation #write furnace_nbt_recipes.data *= @s furnace_nbt_recipes.progress
-execute store result block ~ ~ ~ cooking_time_spent int 1 run scoreboard players get #write furnace_nbt_recipes.data
-execute store result block ~ ~ ~ cooking_total_time int 1 run scoreboard players get #held furnace_nbt_recipes.data
+execute unless score #total_time furnace_nbt_recipes.data = #held furnace_nbt_recipes.data store result block ~ ~ ~ cooking_total_time int 1 run scoreboard players get #held furnace_nbt_recipes.data
+
+# Vanilla moves the clock by one every tick, so ours is only written once the arrow would show another of its 24 pixels, and always on the last one, where vanilla would otherwise complete the recipe
+scoreboard players operation #pixel furnace_nbt_recipes.data = #write furnace_nbt_recipes.data
+scoreboard players operation #pixel furnace_nbt_recipes.data /= #pixel_time furnace_nbt_recipes.data
+scoreboard players operation #shown_pixel furnace_nbt_recipes.data = #cook_time furnace_nbt_recipes.data
+scoreboard players operation #shown_pixel furnace_nbt_recipes.data /= #pixel_time furnace_nbt_recipes.data
+execute if score #shown_pixel furnace_nbt_recipes.data matches 23.. run scoreboard players set #shown_pixel furnace_nbt_recipes.data -1
+execute unless score #shown_pixel furnace_nbt_recipes.data = #pixel furnace_nbt_recipes.data store result block ~ ~ ~ cooking_time_spent int 1 run scoreboard players get #write furnace_nbt_recipes.data
 
 # Cook once the recipe got its full duration
 execute if score @s furnace_nbt_recipes.progress >= @s furnace_nbt_recipes.intended run function furnace_nbt_recipes:v1.12.0/technical/cook
