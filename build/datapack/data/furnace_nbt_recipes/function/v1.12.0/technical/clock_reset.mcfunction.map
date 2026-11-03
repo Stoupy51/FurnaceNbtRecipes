@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"file": "clock_reset.mcfunction",
+	"sourceRoot": "../../../../../../..",
+	"sources": [
+		"user/technical.py"
+	],
+	"names": [],
+	"mappings": "AA8HmD;;;;;;;;AACnD;AACA;AACA;AACA;AACA;AACA"
+}

@@ -16,6 +16,7 @@ scoreboard objectives add furnace_nbt_recipes.intended dummy
 scoreboard objectives add furnace_nbt_recipes.stashed dummy
 scoreboard objectives add furnace_nbt_recipes.speed dummy
 scoreboard objectives add furnace_nbt_recipes.partial dummy
+scoreboard objectives add furnace_nbt_recipes.type dummy
 
 # Cooking time held on furnaces running a custom recipe: high enough that vanilla never reaches it, low enough to stay in the 16 bits the furnace screen syncs
 scoreboard players set #held furnace_nbt_recipes.data 30000

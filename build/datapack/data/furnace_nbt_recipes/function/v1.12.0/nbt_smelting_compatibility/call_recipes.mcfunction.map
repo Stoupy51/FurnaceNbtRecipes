@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"file": "call_recipes.mcfunction",
+	"sourceRoot": "../../../../../../..",
+	"sources": [
+		"user/technical.py"
+	],
+	"names": [],
+	"mappings": "AAYqE;;;;;;;;AACrE;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA"
+}

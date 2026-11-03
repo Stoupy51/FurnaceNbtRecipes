@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"file": "drop_stash.mcfunction",
+	"sourceRoot": "../../../../../../..",
+	"sources": [
+		"user/technical.py"
+	],
+	"names": [],
+	"mappings": "AA0OkD;;;;;;;;;;AAClD;AACA"
+}

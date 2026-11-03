@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"file": "cook.mcfunction",
+	"sourceRoot": "../../../../../../..",
+	"sources": [
+		"user/technical.py"
+	],
+	"names": [],
+	"mappings": "AA2C4C;;;;;;;;;AAC5C;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA"
+}

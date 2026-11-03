@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"file": "shulker_manipulation.mcfunction",
+	"sourceRoot": "../../../../../../..",
+	"sources": [
+		"user/technical.py"
+	],
+	"names": [],
+	"mappings": "AAiR4D;;;;;;;;AAC5D;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA"
+}

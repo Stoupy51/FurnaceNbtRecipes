@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"file": "placed_furnace.mcfunction",
+	"sourceRoot": "../../../../../../..",
+	"sources": [
+		"user/link.py"
+	],
+	"names": [],
+	"mappings": "AAkDyD;;;;;;;;AACzD;AACA;AACA"
+}

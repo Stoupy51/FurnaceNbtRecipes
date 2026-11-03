@@ -22,7 +22,9 @@ data remove storage furnace_nbt_recipes:main searched
 # Apply XP support
 scoreboard players set #found furnace_nbt_recipes.data 0
 function #furnace_nbt_recipes:v1/recipes_used
-execute if score #found furnace_nbt_recipes matches 0 run function furnace_nbt_recipes:v1.12.0/technical/default_xp
+# A handler called through 'store result ... run function' sets no #found when its function returns nothing, so its write to RecipesUsed counts too
+execute if score #found furnace_nbt_recipes.data matches 0 store success score #found furnace_nbt_recipes.data run data modify storage furnace_nbt_recipes:main furnace.RecipesUsed set from block ~ ~ ~ RecipesUsed
+execute if score #found furnace_nbt_recipes.data matches 0 run function furnace_nbt_recipes:v1.12.0/technical/default_xp
 
 # Restart the cooking clock, handing the furnace back its real cooking time
 execute if score @s furnace_nbt_recipes.intended matches 1.. store result block ~ ~ ~ cooking_total_time int 1 run scoreboard players get @s furnace_nbt_recipes.intended

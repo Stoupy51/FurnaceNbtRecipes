@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"file": "disable_cooking.mcfunction",
+	"sourceRoot": "../../../../../../..",
+	"sources": [
+		"user/example_slots.py"
+	],
+	"names": [],
+	"mappings": "AA6B2D;;;;;;AAC3D;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA"
+}

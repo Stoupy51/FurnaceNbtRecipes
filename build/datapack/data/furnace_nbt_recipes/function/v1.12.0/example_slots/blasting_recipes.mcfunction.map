@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"file": "blasting_recipes.mcfunction",
+	"sourceRoot": "../../../../../../..",
+	"sources": [
+		"user/example_slots.py"
+	],
+	"names": [],
+	"mappings": "AAY4D;;;;;;AAC5D;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA"
+}

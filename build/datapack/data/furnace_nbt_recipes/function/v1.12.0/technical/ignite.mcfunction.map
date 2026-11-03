@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"file": "ignite.mcfunction",
+	"sourceRoot": "../../../../../../..",
+	"sources": [
+		"user/technical.py"
+	],
+	"names": [],
+	"mappings": "AAyN8C;;;;;;;;AAC9C;AACA;AACA;AACA;AACA;AACA;AACA;AACA"
+}

@@ -6,12 +6,11 @@
 # @within	furnace_nbt_recipes:v1.12.0/technical/main
 #
 
-# Compare the library output with the item already sitting in the output slot, count and slot aside
-data modify storage furnace_nbt_recipes:main check.fur set from storage furnace_nbt_recipes:main furnace.Items[{Slot:2b}]
-data remove storage furnace_nbt_recipes:main check.fur.count
-data remove storage furnace_nbt_recipes:main check.fur.Slot
+execute store result score #count furnace_nbt_recipes.data run data get storage furnace_nbt_recipes:main furnace.Items[{Slot:2b}].count
+execute if score #count furnace_nbt_recipes.data > #lib_room furnace_nbt_recipes.data run return run scoreboard players set #reset furnace_nbt_recipes.data 1
 
-# Matching both ways means the two items are the same, #same reaches 2
-scoreboard players set #same furnace_nbt_recipes.data 0
-function furnace_nbt_recipes:v1.12.0/technical/same_output_check with storage furnace_nbt_recipes:main check
+# Given the count search_recipe gave the library output, the output slot item equals it only when both stack
+data modify storage furnace_nbt_recipes:main output set from storage furnace_nbt_recipes:main furnace.Items[{Slot:2b}]
+data modify storage furnace_nbt_recipes:main output.count set value 1
+execute store success score #reset furnace_nbt_recipes.data run data modify storage furnace_nbt_recipes:main output set from storage furnace_nbt_recipes:main check.lib
 

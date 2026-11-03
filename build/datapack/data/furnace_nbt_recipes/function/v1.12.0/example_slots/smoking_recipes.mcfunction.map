@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"file": "smoking_recipes.mcfunction",
+	"sourceRoot": "../../../../../../..",
+	"sources": [
+		"user/example_slots.py"
+	],
+	"names": [],
+	"mappings": "AAoF2D;;;;;AAC3D;AACA"
+}

@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"file": "load_delayed.mcfunction",
+	"sourceRoot": "../../../../../..",
+	"sources": [
+		"user/core.py"
+	],
+	"names": [],
+	"mappings": "AAY0C;;;;;;;AAC1C;AACA;AACA;AACA"
+}

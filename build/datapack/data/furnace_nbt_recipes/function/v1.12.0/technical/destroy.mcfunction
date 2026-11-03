@@ -16,4 +16,5 @@ scoreboard players reset @s furnace_nbt_recipes.intended
 scoreboard players reset @s furnace_nbt_recipes.progress
 scoreboard players reset @s furnace_nbt_recipes.partial
 scoreboard players reset @s furnace_nbt_recipes.stall_time
+scoreboard players reset @s furnace_nbt_recipes.type
 

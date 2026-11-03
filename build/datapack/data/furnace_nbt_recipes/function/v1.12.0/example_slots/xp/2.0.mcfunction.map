@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"file": "2.0.mcfunction",
+	"sourceRoot": "../../../../../../../..",
+	"sources": [
+		"user/example_slots.py"
+	],
+	"names": [],
+	"mappings": "AAgGkD;;;;;;AAClD;AACA;AACA;AACA;AACA;AACA"
+}

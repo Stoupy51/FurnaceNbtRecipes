@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"file": "new_furnace.mcfunction",
+	"sourceRoot": "../../../../../../../..",
+	"sources": [
+		"user/check_for_furnaces.py"
+	],
+	"names": [],
+	"mappings": "AA6VyE;;;;;;;;AACzE;AACA;AACA;AACA;AACA;AACA"
+}

@@ -17,13 +17,13 @@ execute unless score #total_time furnace_nbt_recipes.data = #held furnace_nbt_re
 execute unless score @s furnace_nbt_recipes.intended matches 1.. run return 0
 
 # Advance like vanilla does: forward while lit, backward once the fire is out
-execute unless score #lit_time furnace_nbt_recipes.data matches 0 run scoreboard players operation @s furnace_nbt_recipes.partial += @s furnace_nbt_recipes.speed
+execute unless score #lit furnace_nbt_recipes.data matches 0 run scoreboard players operation @s furnace_nbt_recipes.partial += @s furnace_nbt_recipes.speed
 scoreboard players operation #gain furnace_nbt_recipes.data = @s furnace_nbt_recipes.partial
 scoreboard players operation #gain furnace_nbt_recipes.data /= #1000 furnace_nbt_recipes.data
 scoreboard players operation @s furnace_nbt_recipes.progress += #gain furnace_nbt_recipes.data
 scoreboard players operation #gain furnace_nbt_recipes.data *= #1000 furnace_nbt_recipes.data
 scoreboard players operation @s furnace_nbt_recipes.partial -= #gain furnace_nbt_recipes.data
-execute if score #lit_time furnace_nbt_recipes.data matches 0 run scoreboard players remove @s furnace_nbt_recipes.progress 2
+execute if score #lit furnace_nbt_recipes.data matches 0 run scoreboard players remove @s furnace_nbt_recipes.progress 2
 execute if score @s furnace_nbt_recipes.progress matches ..0 run scoreboard players set @s furnace_nbt_recipes.progress 0
 execute if score @s furnace_nbt_recipes.progress matches ..0 run scoreboard players set @s furnace_nbt_recipes.partial 0
 

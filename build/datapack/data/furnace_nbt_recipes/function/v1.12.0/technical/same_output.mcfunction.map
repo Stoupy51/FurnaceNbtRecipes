@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"file": "same_output.mcfunction",
+	"sourceRoot": "../../../../../../..",
+	"sources": [
+		"user/technical.py"
+	],
+	"names": [],
+	"mappings": "AAuQmD;;;;;;;;AACnD;AACA;AACA;AACA;AACA;AACA;AACA;AACA"
+}

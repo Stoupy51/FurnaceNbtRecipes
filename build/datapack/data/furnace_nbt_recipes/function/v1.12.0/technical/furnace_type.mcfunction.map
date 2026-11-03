@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"file": "furnace_type.mcfunction",
+	"sourceRoot": "../../../../../../..",
+	"sources": [
+		"user/technical.py"
+	],
+	"names": [],
+	"mappings": "AAmNoD;;;;;;;;AACpD;AACA;AACA;AACA"
+}
