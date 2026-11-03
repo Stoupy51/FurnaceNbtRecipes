@@ -33,6 +33,12 @@ scoreboard players set #held {ns}.data 30000
 # A speed is given per thousand, so a furnace can cook at a fraction of a tick per tick
 scoreboard players set #1000 {ns}.data 1000
 
+# Held cooking time one pixel of the 24 pixel progress arrow stands for
+scoreboard players set #pixel_time {ns}.data 1250
+
+# Recipes may differ after a reload, so the next furnace searches its recipe again
+data remove storage {ns}:main searched
+
 # Place a yellow shulker box for inventory manipulation
 execute in minecraft:overworld run forceload add -30000000 1600
 
