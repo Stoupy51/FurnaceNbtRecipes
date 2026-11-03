@@ -66,6 +66,8 @@ execute if score #found furnace_nbt_recipes.data matches 0 store result score #f
 execute if entity @e[tag=simplenergy.electric_smelter,distance=..1] run scoreboard players set @s furnace_nbt_recipes.speed 8000
 ```
 
+🧩 A block that already has an entity inside the furnace can be tracked through it instead of a marker: add the `furnace_nbt_recipes.furnace` tag to it, set its `furnace_nbt_recipes.speed`, and kill any marker the library already placed within 0.75 blocks of it.
+
 ## 📝 Recipe Format
 
 📝 For each custom recipe you make, you'll need to add a recipe that take the base item ingredient as ingredient and result the base item of the result.<br>

@@ -19,6 +19,6 @@ execute unless loaded -30000000 14 1610 run schedule function {ns}:v{version}/lo
 	write_versioned_function("loop", f"""
 # Tick function
 schedule function {ns}:v{version}/loop 1t replace
-execute as @e[type=marker,tag={ns}.furnace] at @s run function {ns}:v{version}/technical/tick
+execute as @e[tag={ns}.furnace] at @s run function {ns}:v{version}/technical/tick
 """)
 

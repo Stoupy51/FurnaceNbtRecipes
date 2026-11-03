@@ -97,6 +97,21 @@ execute store result block ~ ~ ~ cooking_total_time int 1 run scoreboard players
 execute if score @s {ns}.progress >= @s {ns}.intended run function {ns}:v{version}/technical/cook
 """)
 
+	write_versioned_function("technical/vanilla_clock", f"""
+# Vanilla already adds one tick of progress, add what the configured speed gives on top of it
+scoreboard players operation @s {ns}.partial += @s {ns}.speed
+scoreboard players remove @s {ns}.partial 1000
+scoreboard players operation #gain {ns}.data = @s {ns}.partial
+scoreboard players operation #gain {ns}.data /= #1000 {ns}.data
+scoreboard players operation @s {ns}.partial %= #1000 {ns}.data
+scoreboard players operation #cook_time {ns}.data += #gain {ns}.data
+
+# Stay one tick short of completion, vanilla completes the recipe on its own next tick
+scoreboard players remove #total_time {ns}.data 1
+execute if score #cook_time {ns}.data > #total_time {ns}.data run scoreboard players operation #cook_time {ns}.data = #total_time {ns}.data
+execute store result block ~ ~ ~ cooking_time_spent int 1 run scoreboard players get #cook_time {ns}.data
+""")
+
 	write_versioned_function("technical/clock_reset", f"""
 # A cooking time as long as the held one is a leftover hold, not a duration a recipe asked for
 scoreboard players set @s {ns}.intended 0
@@ -145,6 +160,9 @@ execute if score #found {ns}.data matches 1 if data storage {ns}:main furnace.It
 # Otherwise, continue
 execute if score #reset {ns}.data matches 0 if score #found {ns}.data matches 1 if score #total_time {ns}.data matches 1.. run function {ns}:v{version}/technical/clock
 
+# A vanilla recipe keeps the vanilla clock, so a furnace configured faster than 1000 gets its extra progress here
+execute if score #reset {ns}.data matches 0 if score #found {ns}.data matches 0 if score @s {ns}.speed matches 1001.. if score #cook_time {ns}.data matches 1.. if score #total_time {ns}.data matches 1..29999 unless data block ~ ~ ~ {{lit_time_remaining:0}} run function {ns}:v{version}/technical/vanilla_clock
+
 # The fire paces the cooking, so stalling only counts while it is out
 execute unless data block ~ ~ ~ {{lit_time_remaining:0}} run scoreboard players reset @s {ns}.stall_time
 
@@ -152,7 +170,7 @@ execute unless data block ~ ~ ~ {{lit_time_remaining:0}} run scoreboard players 
 execute if score #reset {ns}.data matches 0 if score #found {ns}.data matches 1 if score #cook_time {ns}.data matches 0 run scoreboard players add @s {ns}.stall_time 1
 
 # Vanilla refuses to light while the output slot holds an item its own recipe cannot stack with, give it a free slot
-execute if score #reset {ns}.data matches 0 if score #found {ns}.data matches 1 if score @s {ns}.stall_time matches 5 if data block ~ ~ ~ {{lit_time_remaining:0}} if data block ~ ~ ~ Items[{{Slot:1b}}] if data block ~ ~ ~ Items[{{Slot:2b}}] run function {ns}:v{version}/technical/ignite
+execute if score #reset {ns}.data matches 0 if score #found {ns}.data matches 1 if entity @s[type=marker] if score @s {ns}.stall_time matches 5 if data block ~ ~ ~ {{lit_time_remaining:0}} if data block ~ ~ ~ Items[{{Slot:1b}}] if data block ~ ~ ~ Items[{{Slot:2b}}] run function {ns}:v{version}/technical/ignite
 
 # Force smelting if stalled for too long (100 ticks)
 execute if score #reset {ns}.data matches 0 if score #found {ns}.data matches 1 if score @s {ns}.stall_time matches 100.. run function {ns}:v{version}/technical/cook
@@ -164,7 +182,15 @@ execute if score #reset {ns}.data matches 1 if score #nbt_smelting.major load.st
 
 	write_versioned_function("technical/destroy", f"""
 execute if score @s {ns}.stashed matches 1 run function {ns}:v{version}/technical/drop_stash with entity @s data
-kill @s
+
+# A marker is ours to remove, any other entity only stops being tracked
+execute if entity @s[type=marker] run return run kill @s
+tag @s remove {ns}.furnace
+scoreboard players reset @s {ns}.speed
+scoreboard players reset @s {ns}.intended
+scoreboard players reset @s {ns}.progress
+scoreboard players reset @s {ns}.partial
+scoreboard players reset @s {ns}.stall_time
 """)
 
 	write_versioned_function("technical/ignite", f"""

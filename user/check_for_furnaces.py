@@ -344,7 +344,7 @@ execute positioned ~1 ~ ~08 if block ~ ~ ~ #{ns}:furnaces run function {ns}:v{ve
 """)
 
 	write_versioned_function("advancements/check_for_furnaces/try_place_marker", f"""
-execute align xyz positioned ~.5 ~ ~.5 unless entity @e[type=marker,dx=-1,dy=-1,dz=-1,tag={ns}.furnace] summon marker run function {ns}:v{version}/advancements/check_for_furnaces/new_furnace
+execute align xyz positioned ~.5 ~.5 ~.5 unless entity @e[tag={ns}.furnace,distance=..0.75] positioned ~ ~-.5 ~ summon marker run function {ns}:v{version}/advancements/check_for_furnaces/new_furnace
 """)
 
 	write_versioned_function("advancements/check_for_furnaces/new_furnace", f"""
