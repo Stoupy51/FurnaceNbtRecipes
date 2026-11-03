@@ -1,0 +1,7 @@
+{
+	"pack": {
+		"description": "FurnaceNbtRecipes tests",
+		"min_format": [121, 0],
+		"max_format": [9999, 0]
+	}
+}

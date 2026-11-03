@@ -1,0 +1,1 @@
+execute if score #found furnace_nbt_recipes.data matches 0 store result score #found furnace_nbt_recipes.data if data storage furnace_nbt_recipes:main input.components."minecraft:custom_data"{fnr_test:"b"} run function furnace_nbt_recipes_test:xp_b

@@ -1,0 +1,1 @@
+execute if score #found furnace_nbt_recipes.data matches 0 store result score #found furnace_nbt_recipes.data if data storage furnace_nbt_recipes:main input{id:"minecraft:raw_iron",components:{"minecraft:custom_data":{fnr_test:"a"}}} run item replace block ~ ~ ~ container.3 with minecraft:netherite_scrap[minecraft:custom_data={fnr_test:"a"}]

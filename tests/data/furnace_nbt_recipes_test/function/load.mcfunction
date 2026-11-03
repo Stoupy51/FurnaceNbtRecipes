@@ -1,0 +1,1 @@
+scoreboard objectives add furnace_nbt_recipes_test.data dummy
