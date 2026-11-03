@@ -1,9 +1,9 @@
 
 #> furnace_nbt_recipes:v1.11.0/technical/tick
 #
-# @executed	as @e[type=marker,tag=furnace_nbt_recipes.furnace] & at @s
+# @executed	as @e[tag=furnace_nbt_recipes.furnace] & at @s
 #
-# @within	furnace_nbt_recipes:v1.11.0/loop [ as @e[type=marker,tag=furnace_nbt_recipes.furnace] & at @s ]
+# @within	furnace_nbt_recipes:v1.11.0/loop [ as @e[tag=furnace_nbt_recipes.furnace] & at @s ]
 #
 
 # Destroy marker entity if furnace is destroyed, and stop execution

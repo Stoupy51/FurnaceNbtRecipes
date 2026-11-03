@@ -1,7 +1,7 @@
 
 #> furnace_nbt_recipes:v1.11.0/technical/same_output_check
 #
-# @executed	as @e[type=marker,tag=furnace_nbt_recipes.furnace] & at @s
+# @executed	as @e[tag=furnace_nbt_recipes.furnace] & at @s
 #
 # @within	furnace_nbt_recipes:v1.11.0/technical/same_output with storage furnace_nbt_recipes:main check
 #

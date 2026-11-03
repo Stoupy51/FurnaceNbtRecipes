@@ -294,5 +294,5 @@
 #			furnace_nbt_recipes:v1.11.0/advancements/check_for_furnaces/look_layer [ positioned ~1 ~ ~08 ]
 #
 
-execute align xyz positioned ~.5 ~ ~.5 unless entity @e[type=marker,dx=-1,dy=-1,dz=-1,tag=furnace_nbt_recipes.furnace] summon marker run function furnace_nbt_recipes:v1.11.0/advancements/check_for_furnaces/new_furnace
+execute align xyz positioned ~.5 ~.5 ~.5 unless entity @e[tag=furnace_nbt_recipes.furnace,distance=..0.75] positioned ~ ~-.5 ~ summon marker run function furnace_nbt_recipes:v1.11.0/advancements/check_for_furnaces/new_furnace
 

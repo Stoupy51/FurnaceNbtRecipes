@@ -1,7 +1,7 @@
 
 #> furnace_nbt_recipes:v1.11.0/technical/main
 #
-# @executed	as @e[type=marker,tag=furnace_nbt_recipes.furnace] & at @s
+# @executed	as @e[tag=furnace_nbt_recipes.furnace] & at @s
 #
 # @within	furnace_nbt_recipes:v1.11.0/technical/tick
 #
@@ -36,6 +36,9 @@ execute if score #found furnace_nbt_recipes.data matches 1 if data storage furna
 # Otherwise, continue
 execute if score #reset furnace_nbt_recipes.data matches 0 if score #found furnace_nbt_recipes.data matches 1 if score #total_time furnace_nbt_recipes.data matches 1.. run function furnace_nbt_recipes:v1.11.0/technical/clock
 
+# A vanilla recipe keeps the vanilla clock, so a furnace configured faster than 1000 gets its extra progress here
+execute if score #reset furnace_nbt_recipes.data matches 0 if score #found furnace_nbt_recipes.data matches 0 if score @s furnace_nbt_recipes.speed matches 1001.. if score #cook_time furnace_nbt_recipes.data matches 1.. if score #total_time furnace_nbt_recipes.data matches 1..29999 unless data block ~ ~ ~ {lit_time_remaining:0} run function furnace_nbt_recipes:v1.11.0/technical/vanilla_clock
+
 # The fire paces the cooking, so stalling only counts while it is out
 execute unless data block ~ ~ ~ {lit_time_remaining:0} run scoreboard players reset @s furnace_nbt_recipes.stall_time
 
@@ -43,7 +46,7 @@ execute unless data block ~ ~ ~ {lit_time_remaining:0} run scoreboard players re
 execute if score #reset furnace_nbt_recipes.data matches 0 if score #found furnace_nbt_recipes.data matches 1 if score #cook_time furnace_nbt_recipes.data matches 0 run scoreboard players add @s furnace_nbt_recipes.stall_time 1
 
 # Vanilla refuses to light while the output slot holds an item its own recipe cannot stack with, give it a free slot
-execute if score #reset furnace_nbt_recipes.data matches 0 if score #found furnace_nbt_recipes.data matches 1 if score @s furnace_nbt_recipes.stall_time matches 5 if data block ~ ~ ~ {lit_time_remaining:0} if data block ~ ~ ~ Items[{Slot:1b}] if data block ~ ~ ~ Items[{Slot:2b}] run function furnace_nbt_recipes:v1.11.0/technical/ignite
+execute if score #reset furnace_nbt_recipes.data matches 0 if score #found furnace_nbt_recipes.data matches 1 if entity @s[type=marker] if score @s furnace_nbt_recipes.stall_time matches 5 if data block ~ ~ ~ {lit_time_remaining:0} if data block ~ ~ ~ Items[{Slot:1b}] if data block ~ ~ ~ Items[{Slot:2b}] run function furnace_nbt_recipes:v1.11.0/technical/ignite
 
 # Force smelting if stalled for too long (100 ticks)
 execute if score #reset furnace_nbt_recipes.data matches 0 if score #found furnace_nbt_recipes.data matches 1 if score @s furnace_nbt_recipes.stall_time matches 100.. run function furnace_nbt_recipes:v1.11.0/technical/cook
