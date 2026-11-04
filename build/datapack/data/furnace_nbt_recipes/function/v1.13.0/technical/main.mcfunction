@@ -13,6 +13,9 @@ execute if score #lit furnace_nbt_recipes.data matches 0 unless items block ~ ~ 
 # Copy furnace nbt once, the checks below read this copy
 data modify storage furnace_nbt_recipes:main furnace set from block ~ ~ ~
 
+# A pack can burn a furnace by writing lit_time_remaining, without the block ever switching to lit=true
+execute if score #lit furnace_nbt_recipes.data matches 0 unless data storage furnace_nbt_recipes:main furnace{lit_time_remaining:0} run scoreboard players set #lit furnace_nbt_recipes.data 1
+
 # A tracked furnace keeps its block, so its type is read once, whatever entity tracks it
 execute unless score @s furnace_nbt_recipes.type matches 0.. run function furnace_nbt_recipes:v1.13.0/technical/furnace_type
 scoreboard players operation #type furnace_nbt_recipes.data = @s furnace_nbt_recipes.type
