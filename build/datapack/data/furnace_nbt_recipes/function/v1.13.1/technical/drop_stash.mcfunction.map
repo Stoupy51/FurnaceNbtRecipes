@@ -1,7 +1,6 @@
 {
 	"version": 3,
 	"file": "drop_stash.mcfunction",
-	"sourceRoot": "../../../../../../..",
 	"sources": [
 		"user/technical.py"
 	],

@@ -1,7 +1,6 @@
 {
 	"version": 3,
 	"file": "recipes_used.mcfunction",
-	"sourceRoot": "../../../../../../..",
 	"sources": [
 		"user/example_slots.py"
 	],

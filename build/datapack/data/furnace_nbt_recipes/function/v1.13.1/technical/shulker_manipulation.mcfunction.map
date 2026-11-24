@@ -1,7 +1,6 @@
 {
 	"version": 3,
 	"file": "shulker_manipulation.mcfunction",
-	"sourceRoot": "../../../../../../..",
 	"sources": [
 		"user/technical.py"
 	],

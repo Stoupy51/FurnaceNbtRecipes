@@ -1,7 +1,6 @@
 {
 	"version": 3,
 	"file": "loop.mcfunction",
-	"sourceRoot": "../../../../../..",
 	"sources": [
 		"user/core.py"
 	],

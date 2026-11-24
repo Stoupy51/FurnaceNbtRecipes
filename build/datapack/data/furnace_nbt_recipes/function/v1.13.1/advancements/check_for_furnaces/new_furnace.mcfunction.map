@@ -1,7 +1,6 @@
 {
 	"version": 3,
 	"file": "new_furnace.mcfunction",
-	"sourceRoot": "../../../../../../../..",
 	"sources": [
 		"user/check_for_furnaces.py"
 	],
